@@ -1,9 +1,11 @@
-import type { FC } from 'react'
+import { FC } from 'react';
 
-const Home: FC = () => (
-  <div>
-    this is home
-  </div>
-)
+const Home: FC = () => {
+    return(
+        <h1>
+            主页
+        </h1>
+    )
+}
 
-export default Home
+export default Home;

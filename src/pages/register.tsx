@@ -2,42 +2,42 @@ import { useState, FC, useEffect } from 'react';
 import { Form, Input, Button, Card } from 'antd';
 import { UserOutlined, LockOutlined } from '@ant-design/icons';
 import { useNavigate, Link } from 'react-router-dom';
-import { login } from '../services/userAPI'
+import { register } from '../services/userAPI';
 
-const Login: FC = () => {
-  const [form] = Form.useForm()
-  const [loading, setLoading] = useState(false)
-  const [loginSuccess, setLoginSuccess] = useState(false)
-  const navigate = useNavigate()
+const Register: FC = () => {
+  const [form] = Form.useForm();
+  const [loading, setLoading] = useState(false);
+  const [registrationSuccess, setRegistrationSuccess] = useState(false);
+  const navigate = useNavigate();
 
   useEffect(() => {
-    if (loginSuccess) {
+    if (registrationSuccess) {
       setTimeout(() => {
-        navigate('/home') // 跳转到登录页面
-      }, 1500)
+        navigate('/login'); // 一秒后跳转到登录页面
+      }, 1500);
     }
-  }, [loginSuccess, navigate])
+  }, [registrationSuccess, navigate]);
 
   const onFinish = async (values: any) => {
-    setLoading(true)
     try {
-      const response = await login(values);
-      // 处理登录成功的响应
-      // setLoginSuccess(true)
-      console.log('Login successful:', response.data);
-      // 这里可以根据需要进行跳转等操作
+      setLoading(true);
+      const response = await register(values);
+      console.log('Registered values:', response.data);
+      setLoading(false);
+      setRegistrationSuccess(true);
     } catch (error) {
-      // 处理登录失败
-      console.error('Login failed:', error);
+      // 处理注册失败
+      setLoading(false);
+      console.error('Registration failed:', error);
     }
-  }
+  };
 
   return (
     <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100vh' }}>
       <Card style={{ width: 300 }}>
         <Form
           form={form}
-          name="login-form"
+          name="register-form"
           onFinish={onFinish}
         >
           <Form.Item
@@ -55,20 +55,19 @@ const Login: FC = () => {
           </Form.Item>
 
           <Form.Item style={{ marginBottom: '10px' }}>
-              Have no Account?&nbsp;&nbsp;
-              <Link to='/register'>
-                Sign in
-              </Link>
+            Already have an account?&nbsp;&nbsp;
+            <Link to='/login'>
+              Log in
+            </Link>
           </Form.Item>
 
-          {/* 三目运算符，显示登陆成功信息 */}
-          {loginSuccess ? (
-            <p style={{ color: 'green' }}>Login successful. Redirecting to Home...</p>
+          {registrationSuccess ? (
+            <p style={{ color: 'green' }}>Registration successful. Redirecting to login...</p>
           ) : null}
 
           <Form.Item>
             <Button type="primary" htmlType="submit" loading={loading} style={{ width: '100%' }}>
-              Log in
+              Register
             </Button>
           </Form.Item>
         </Form>
@@ -77,4 +76,4 @@ const Login: FC = () => {
   );
 };
 
-export default Login;
+export default Register;
