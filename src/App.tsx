@@ -1,15 +1,19 @@
 import type { FC } from 'react'
 import { useRoutes } from 'react-router-dom'
 import routes from './routes/index'
+import { AuthProvider } from './contexts/AuthContext'
+import { UserInfoProvider } from './contexts/UserInfoContext'
 
 const App: FC = () => {
   // 获得路由表
   const routeView = useRoutes(routes)
 
   return (
-    <div>
-      { routeView }
-    </div>
+    <AuthProvider>
+      <UserInfoProvider>
+        {routeView}
+      </UserInfoProvider>
+    </AuthProvider>
   )
 }
 

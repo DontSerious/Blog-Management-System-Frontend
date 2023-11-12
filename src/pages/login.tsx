@@ -3,10 +3,14 @@ import { Form, Input, Button, Card } from 'antd';
 import { UserOutlined, LockOutlined } from '@ant-design/icons';
 import { useNavigate, Link } from 'react-router-dom';
 import { login } from '../services/userAPI'
+import { useAuth } from '../contexts/AuthContext';
+import { StatusSuccess } from '../constants';
 
 const Login: FC = () => {
   const [form] = Form.useForm()
   const [loading, setLoading] = useState(false)
+  const { statusMsg, setAuthData } = useAuth();
+  const [loginFail, setLoginFail] = useState(false);
   const [loginSuccess, setLoginSuccess] = useState(false)
   const navigate = useNavigate()
 
@@ -20,15 +24,22 @@ const Login: FC = () => {
 
   const onFinish = async (values: any) => {
     setLoading(true)
+    setLoginSuccess(false);
+    setLoginFail(false);
     try {
       const response = await login(values);
-      // 处理登录成功的响应
-      // setLoginSuccess(true)
-      console.log('Login successful:', response.data);
-      // 这里可以根据需要进行跳转等操作
+      const data = response.data;
+      setAuthData(data.status_code, data.status_msg);
+      if (data.status_code === StatusSuccess) {
+        setLoginSuccess(true);
+      } else {
+        setLoginFail(true);
+      }
     } catch (error) {
       // 处理登录失败
       console.error('Login failed:', error);
+    } finally {
+      setLoading(false);
     }
   }
 
@@ -42,35 +53,39 @@ const Login: FC = () => {
         >
           <Form.Item
             name="username"
-            rules={[{ required: true, message: 'Please enter your username!' }]}
+            rules={[{ required: true, message: '输入有误!' }]}
           >
-            <Input prefix={<UserOutlined />} placeholder="Username" />
+            <Input prefix={<UserOutlined />} placeholder="用户名" />
           </Form.Item>
 
           <Form.Item style={{ marginBottom: '10px' }}
             name="password"
-            rules={[{ required: true, message: 'Please enter your password!' }]}
+            rules={[{ required: true, message: '输入有误!' }]}
           >
-            <Input.Password prefix={<LockOutlined />} placeholder="Password" />
+            <Input.Password prefix={<LockOutlined />} placeholder="密码" />
           </Form.Item>
 
           <Form.Item style={{ marginBottom: '10px' }}>
-              Have no Account?&nbsp;&nbsp;
+              还没有账号？&nbsp;&nbsp;
               <Link to='/register'>
-                Sign in
+                注册
               </Link>
           </Form.Item>
 
-          {/* 三目运算符，显示登陆成功信息 */}
-          {loginSuccess ? (
-            <p style={{ color: 'green' }}>Login successful. Redirecting to Home...</p>
-          ) : null}
-
           <Form.Item>
             <Button type="primary" htmlType="submit" loading={loading} style={{ width: '100%' }}>
-              Log in
+              登录
             </Button>
           </Form.Item>
+
+          <div>
+            {loginSuccess ? (
+              <p style={{ color: 'green' }}> {statusMsg} 正在跳转... </p>
+            ) : null}
+            {loginFail ? (
+              <p style={{ color: 'red' }}> {statusMsg} 请重试...</p>
+            ) : null}
+          </div>
         </Form>
       </Card>
     </div>

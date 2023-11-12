@@ -3,11 +3,15 @@ import { Form, Input, Button, Card } from 'antd';
 import { UserOutlined, LockOutlined } from '@ant-design/icons';
 import { useNavigate, Link } from 'react-router-dom';
 import { register } from '../services/userAPI';
+import { useAuth } from '../contexts/AuthContext';
+import { StatusSuccess } from '../constants';
 
 const Register: FC = () => {
+  const { statusMsg, setAuthData } = useAuth();
+  const [registrationFail, setRegistrationFail] = useState(false);
+  const [registrationSuccess, setRegistrationSuccess] = useState(false);
   const [form] = Form.useForm();
   const [loading, setLoading] = useState(false);
-  const [registrationSuccess, setRegistrationSuccess] = useState(false);
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -19,16 +23,22 @@ const Register: FC = () => {
   }, [registrationSuccess, navigate]);
 
   const onFinish = async (values: any) => {
+    setLoading(true);
+    setRegistrationSuccess(false);
+    setRegistrationFail(false);
     try {
-      setLoading(true);
       const response = await register(values);
-      console.log('Registered values:', response.data);
-      setLoading(false);
-      setRegistrationSuccess(true);
+      const data = response.data;
+      setAuthData(data.status_code, data.status_msg);
+      if (data.status_code === StatusSuccess) {
+        setRegistrationSuccess(true);
+      } else {
+        setRegistrationFail(true);
+      }
     } catch (error) {
-      // 处理注册失败
-      setLoading(false);
       console.error('Registration failed:', error);
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -42,34 +52,39 @@ const Register: FC = () => {
         >
           <Form.Item
             name="username"
-            rules={[{ required: true, message: 'Please enter your username!' }]}
+            rules={[{ required: true, message: '输入有误!' }]}
           >
-            <Input prefix={<UserOutlined />} placeholder="Username" />
+            <Input prefix={<UserOutlined />} placeholder="用户名" />
           </Form.Item>
 
           <Form.Item style={{ marginBottom: '10px' }}
             name="password"
-            rules={[{ required: true, message: 'Please enter your password!' }]}
+            rules={[{ required: true, message: '输入有误' }]}
           >
-            <Input.Password prefix={<LockOutlined />} placeholder="Password" />
+            <Input.Password prefix={<LockOutlined />} placeholder="密码" />
           </Form.Item>
 
           <Form.Item style={{ marginBottom: '10px' }}>
-            Already have an account?&nbsp;&nbsp;
+            已经有账号了？&nbsp;&nbsp;
             <Link to='/login'>
-              Log in
+              登录
             </Link>
           </Form.Item>
 
-          {registrationSuccess ? (
-            <p style={{ color: 'green' }}>Registration successful. Redirecting to login...</p>
-          ) : null}
-
           <Form.Item>
             <Button type="primary" htmlType="submit" loading={loading} style={{ width: '100%' }}>
-              Register
+              注册
             </Button>
           </Form.Item>
+
+          <div>
+            {registrationSuccess ? (
+              <p style={{ color: 'green' }}> {statusMsg} 正在跳转... </p>
+            ) : null}
+            {registrationFail ? (
+              <p style={{ color: 'red' }}> {statusMsg} 请重试...</p>
+            ) : null}
+          </div>
         </Form>
       </Card>
     </div>
