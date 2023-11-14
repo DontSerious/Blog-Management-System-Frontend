@@ -1,18 +1,24 @@
-import { useState, FC, useEffect } from 'react';
-import { Form, Input, Button, Card } from 'antd';
-import { UserOutlined, LockOutlined } from '@ant-design/icons';
-import { useNavigate, Link } from 'react-router-dom';
+import { useState, FC, useEffect } from 'react'
+import { Form, Input, Button, Card } from 'antd'
+import { UserOutlined, LockOutlined } from '@ant-design/icons'
+import { useNavigate, Link } from 'react-router-dom'
 import { login } from '../services/userAPI'
-import { useAuth } from '../contexts/AuthContext';
-import { StatusSuccess } from '../constants';
+import { StatusSuccess } from '../constants'
+import { useAuth } from '../contexts/AuthContext'
+import { useUserInfo } from '../contexts/UserInfoContext'
 
 const Login: FC = () => {
   const [form] = Form.useForm()
   const [loading, setLoading] = useState(false)
-  const { statusMsg, setAuthData } = useAuth();
-  const [loginFail, setLoginFail] = useState(false);
-  const [loginSuccess, setLoginSuccess] = useState(false)
   const navigate = useNavigate()
+
+  // login
+  const { statusMsg, setAuthData } = useAuth()
+  const [loginFail, setLoginFail] = useState(false)
+  const [loginSuccess, setLoginSuccess] = useState(false)
+
+  // UserInfo
+  const { setUserInfo } = useUserInfo()
 
   useEffect(() => {
     if (loginSuccess) {
@@ -24,22 +30,31 @@ const Login: FC = () => {
 
   const onFinish = async (values: any) => {
     setLoading(true)
-    setLoginSuccess(false);
-    setLoginFail(false);
+    setLoginSuccess(false)
+    setLoginFail(false)
     try {
-      const response = await login(values);
-      const data = response.data;
-      setAuthData(data.status_code, data.status_msg);
+      const response = await login(values)
+      const data = response.data
+
+      // login
+      setAuthData(data.status_code, data.status_msg)
       if (data.status_code === StatusSuccess) {
-        setLoginSuccess(true);
+        setLoginSuccess(true)
       } else {
-        setLoginFail(true);
+        setLoginFail(true)
       }
+
+      // userInfo
+      setUserInfo({
+        userid: data.user_id,
+        username: values.username,
+        userinfo: null,
+      })
     } catch (error) {
       // 处理登录失败
-      console.error('Login failed:', error);
+      console.error('Login failed:', error)
     } finally {
-      setLoading(false);
+      setLoading(false)
     }
   }
 
@@ -66,10 +81,10 @@ const Login: FC = () => {
           </Form.Item>
 
           <Form.Item style={{ marginBottom: '10px' }}>
-              还没有账号？&nbsp;&nbsp;
-              <Link to='/register'>
-                注册
-              </Link>
+            还没有账号？&nbsp;&nbsp;
+            <Link to='/register'>
+              注册
+            </Link>
           </Form.Item>
 
           <Form.Item>
@@ -89,7 +104,7 @@ const Login: FC = () => {
         </Form>
       </Card>
     </div>
-  );
-};
+  )
+}
 
-export default Login;
+export default Login
