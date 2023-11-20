@@ -1,9 +1,9 @@
-import { useState } from 'react';
+import { FC, useState } from 'react';
 import MarkdownEditor from 'react-markdown-editor-lite';
 import ReactMarkdown from 'react-markdown';
 import 'react-markdown-editor-lite/lib/index.css';
 
-const MyMarkdownEditor = () => {
+const MyMarkdownEditor: FC = () => {
   const [markdown, setMarkdown] = useState('# Write your markdown here');
 
   const handleEditorChange = ({ text }: { text: string }) => {

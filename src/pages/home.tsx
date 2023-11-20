@@ -1,11 +1,11 @@
-import React, { FC, useState } from 'react';
-import { Col, Flex, Layout, Row, theme } from 'antd'
-import TreeDirNav from '../components/TreeDirNav'
-import MyMarkdownEditor from '../components/MarkdownEditor'
-import TreePath from '../components/TreePath';
-import NavBar from '../components/NavBar';
-import UserBox from '../components/UserBox';
-import SearchBox from '../components/SearchBox';
+import { FC } from 'react';
+import { Layout, theme } from 'antd'
+import TreeDirNav from '../components/EditPage/TreeDirNav'
+import MyMarkdownEditor from '../components/EditPage/MarkdownEditor'
+import TreePath from '../components/Widgets/TreePath';
+import NavBar from '../components/Header/NavBar';
+import UserBox from '../components/Header/UserBox';
+import SearchBox from '../components/Widgets/SearchBox';
 
 const { Header, Content, Sider } = Layout;
 
@@ -18,15 +18,15 @@ const Home: FC = () => {
   return (
     <Layout>
       <Header style={{ display: 'flex', alignItems: 'center', padding: 0 }}>
-        <SearchBox />
         <NavBar />
         <UserBox />
       </Header>
       <Content style={{ padding: '0 40px' }}>
         <TreePath />
         <Layout style={{ padding: '24px 0', background: colorBgContainer }}>
-          <Sider style={{ paddingLeft: '24px', background: colorBgContainer }} width={200}>
-            <TreeDirNav />
+          <Sider style={{ background: colorBgContainer }} width={200}>
+            <SearchBox />
+            <TreeDirNav style={{ paddingLeft: '12px' }} />
           </Sider>
           <Content style={{ padding: '0 24px', minHeight: 280 }}>
             <MyMarkdownEditor />

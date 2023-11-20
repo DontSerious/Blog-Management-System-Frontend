@@ -1,6 +1,7 @@
 import { Breadcrumb } from 'antd'
+import { FC } from 'react'
 
-const TreePath = () => {
+const TreePath: FC = () => {
     return (
         <Breadcrumb 
             style={{ margin: '16px 0' }} 

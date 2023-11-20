@@ -2,23 +2,18 @@ import { useState, FC, useEffect } from 'react'
 import { Form, Input, Button, Card } from 'antd'
 import { UserOutlined, LockOutlined } from '@ant-design/icons'
 import { useNavigate, Link } from 'react-router-dom'
-import { login } from '../services/userAPI'
+import { login, queryInfo } from '../services/userAPI'
 import { StatusSuccess } from '../constants'
-import { useAuth } from '../contexts/AuthContext'
-import { useUserInfo } from '../contexts/UserInfoContext'
+import { useAuthState, setAuth } from '../contexts/AuthStore';
+import { setUserInfo } from '../contexts/UserInfoStore';
 
 const Login: FC = () => {
   const [form] = Form.useForm()
   const [loading, setLoading] = useState(false)
   const navigate = useNavigate()
-
-  // login
-  const { statusMsg, setAuthData } = useAuth()
   const [loginFail, setLoginFail] = useState(false)
   const [loginSuccess, setLoginSuccess] = useState(false)
-
-  // UserInfo
-  const { setUserInfo } = useUserInfo()
+  const { statusMsg } = useAuthState();
 
   useEffect(() => {
     if (loginSuccess) {
@@ -32,12 +27,13 @@ const Login: FC = () => {
     setLoading(true)
     setLoginSuccess(false)
     setLoginFail(false)
+    
     try {
+      // login
       const response = await login(values)
       const data = response.data
-
-      // login
-      setAuthData(data.status_code, data.status_msg)
+      const userId = data.data
+      setAuth(data.status_msg)
       if (data.status_code === StatusSuccess) {
         setLoginSuccess(true)
       } else {
@@ -45,11 +41,9 @@ const Login: FC = () => {
       }
 
       // userInfo
-      setUserInfo({
-        userid: data.user_id,
-        username: values.username,
-        userinfo: null,
-      })
+      const infoResponse = await queryInfo(userId)
+      const infodata = infoResponse.data
+      setUserInfo(userId, values.username, infodata.data)
     } catch (error) {
       // 处理登录失败
       console.error('Login failed:', error)

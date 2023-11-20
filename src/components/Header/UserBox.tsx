@@ -1,16 +1,16 @@
 import { FC } from 'react';
 import { Button, Flex, Typography } from 'antd'
-import { useUserInfo } from "../contexts/UserInfoContext";
+import { useUserInfoStore, resetUserInfo } from '../../contexts/UserInfoStore';
 
 const UserBox: FC = () => {
     const { Text } = Typography;
-    const { userInfo, logout } = useUserInfo();
+    const { username } = useUserInfoStore()
 
     return (
         <Flex style={{ position: 'absolute', right: 20, alignItems: 'center'}}>
-            <Text style={{ color: 'white', fontSize: '16px' }}>Hi,{ userInfo.username }</Text>
+            <Text style={{ color: 'white', fontSize: '16px' }}>Hi,{ username }</Text>
             &nbsp;&nbsp;&nbsp;
-            <Button type="text" onClick={logout} href='/login' danger ghost>
+            <Button type="text" onClick={ resetUserInfo } href='/login' danger>
                 登出
             </Button>
         </Flex>

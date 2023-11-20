@@ -1,8 +1,12 @@
-import React from 'react';
+import React, { CSSProperties } from 'react';
 import { Tree } from 'antd';
 import type { DataNode, DirectoryTreeProps } from 'antd/es/tree';
 
 const { DirectoryTree } = Tree;
+
+interface TreeDirNavProps {
+    style?: CSSProperties;
+}  
 
 const treeData: DataNode[] = [
     {
@@ -23,7 +27,7 @@ const treeData: DataNode[] = [
     },
 ];
 
-const TreeDirNav: React.FC = () => {
+const TreeDirNav: React.FC<TreeDirNavProps> = ({ style }) => {
     const onSelect: DirectoryTreeProps['onSelect'] = (keys, info) => {
         console.log('Trigger Select', keys, info);
     };
@@ -34,6 +38,7 @@ const TreeDirNav: React.FC = () => {
 
     return (
         <DirectoryTree
+            style={{ ...style }}
             multiple
             defaultExpandAll
             onSelect={onSelect}

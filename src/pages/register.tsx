@@ -3,16 +3,16 @@ import { Form, Input, Button, Card } from 'antd';
 import { UserOutlined, LockOutlined } from '@ant-design/icons';
 import { useNavigate, Link } from 'react-router-dom';
 import { register } from '../services/userAPI';
-import { useAuth } from '../contexts/AuthContext';
 import { StatusSuccess } from '../constants';
+import { useAuthState, setAuth } from '../contexts/AuthStore';
 
 const Register: FC = () => {
-  const { statusMsg, setAuthData } = useAuth();
   const [registrationFail, setRegistrationFail] = useState(false);
   const [registrationSuccess, setRegistrationSuccess] = useState(false);
   const [form] = Form.useForm();
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
+  const { statusMsg } = useAuthState();
 
   useEffect(() => {
     if (registrationSuccess) {
@@ -29,7 +29,7 @@ const Register: FC = () => {
     try {
       const response = await register(values);
       const data = response.data;
-      setAuthData(data.status_code, data.status_msg);
+      setAuth(data.status_msg)
       if (data.status_code === StatusSuccess) {
         setRegistrationSuccess(true);
       } else {
