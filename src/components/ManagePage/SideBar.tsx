@@ -1,8 +1,9 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { MailOutlined, CalendarOutlined } from '@ant-design/icons';
 import { Menu } from 'antd';
 import type { MenuProps } from 'antd/es/menu';
-// import { useUserInfo } from '../../contexts/UserInfoContext';
+import { setSelectedMenuItem, setShowInfo, useManagePage } from '../../contexts/ManagePageStore';
+import { useUserInfoStore } from '../../contexts/UserInfoStore';
 
 type MenuItem = Required<MenuProps>['items'][number];
 
@@ -24,15 +25,21 @@ const items: MenuItem[] = [
 ];
 
 const SideBar: React.FC = () => {
-    // const { setSelectedMenuItem } = useUserInfo();
+    const { selectedMenuItem } = useManagePage()
+    const { info } = useUserInfoStore();
+
+    useEffect(() => {
+        const showInfo = selectedMenuItem === "Categories" ? info!.categories : info!.tags
+        setShowInfo(showInfo!);
+    }, [selectedMenuItem, info])
 
     const handleMenuClick = (menuItem: any) => {
-        // setSelectedMenuItem(menuItem.key);
+        setSelectedMenuItem(menuItem.key);
     };
 
     return (
         <Menu
-            defaultSelectedKeys={["Categories"]}
+            defaultSelectedKeys={[selectedMenuItem]}
             mode="vertical"
             theme="light"
             items={items}

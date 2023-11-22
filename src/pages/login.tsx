@@ -18,7 +18,7 @@ const Login: FC = () => {
   useEffect(() => {
     if (loginSuccess) {
       setTimeout(() => {
-        navigate('/home') // 跳转到登录页面
+        navigate('/manage') // 跳转到登录页面
       }, 1500)
     }
   }, [loginSuccess, navigate])

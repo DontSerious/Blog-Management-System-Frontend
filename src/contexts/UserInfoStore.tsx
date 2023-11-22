@@ -1,8 +1,8 @@
 import { create } from 'zustand';
-import { devtools, persist } from 'zustand/middleware'
+import { persist } from 'zustand/middleware'
 
 interface UserInfo {
-    userid: string | null;
+    userId: string | null;
     username: string | null;
     info: {
         categories: string[];
@@ -11,32 +11,30 @@ interface UserInfo {
 }
 
 export const useUserInfoStore = create<UserInfo>()(
-    devtools(
-        persist(
-            (set) => ({
-                userid: null,
-                username: null,
-                info: null,
-                set,
-            }),
-            {
-                name: 'userInfo',
-                getStorage: () => localStorage,
-            }
-        )
+    persist(
+        (set) => ({
+            userId: null,
+            username: null,
+            info: null,
+            set,
+        }),
+        {
+            name: 'userInfo',
+            getStorage: () => localStorage,
+        }
     )
 )
 
-export const setUserInfo = (userid: string, username: string, info: UserInfo['info']) =>
+export const setUserInfo = (userId: string, username: string, info: UserInfo['info']) =>
     useUserInfoStore.setState({
-        userid: userid,
+        userId: userId,
         username: username,
         info: info
     })
 
 export const resetUserInfo = () =>
     useUserInfoStore.setState({
-        userid: null,
+        userId: null,
         username: null,
         info: null,
     })
