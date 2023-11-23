@@ -132,3 +132,4 @@ node_modules
 build/
 
 .vscode
+.prettierrc
