@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react"
 import { MinusCircleOutlined, PlusOutlined } from "@ant-design/icons"
 import { Alert, Button, Form, Input, Space } from "antd"
-import { useManagePage } from "../../contexts/ManagePageStore"
+import { useManageStore } from "../../contexts/ManagePageStore"
 import { useUserInfoStore, setUserInfo } from "../../contexts/UserInfoStore"
 import { updateInfo } from "../../services/userAPI"
 
@@ -11,7 +11,7 @@ interface UserInfoItem {
 }
 
 const ShowInfoForm: React.FC = () => {
-  const { selectedMenuItem, showInfo } = useManagePage()
+  const { selectedMenuItem, showInfo } = useManageStore()
   const { userId, username, info } = useUserInfoStore()
   const [form] = Form.useForm()
   const [postSuccess, setPostSuccess] = useState(false)

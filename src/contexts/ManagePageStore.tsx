@@ -6,7 +6,7 @@ interface ManageItem {
   showInfo: string[]
 }
 
-export const useManagePage = create<ManageItem>()(
+export const useManageStore = create<ManageItem>()(
   persist(
     (set) => ({
       selectedMenuItem: "Categories",
@@ -19,11 +19,11 @@ export const useManagePage = create<ManageItem>()(
 )
 
 export const setSelectedMenuItem = (selected: string) =>
-  useManagePage.setState({
+  useManageStore.setState({
     selectedMenuItem: selected,
   })
 
 export const setShowInfo = (info: string[]) =>
-  useManagePage.setState({
+  useManageStore.setState({
     showInfo: info,
   })

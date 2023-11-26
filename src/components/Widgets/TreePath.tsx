@@ -1,16 +1,13 @@
-import { Breadcrumb } from 'antd'
-import { FC } from 'react'
+import { Breadcrumb } from "antd"
+import { FC } from "react"
 
 const TreePath: FC = () => {
-    return (
-        <Breadcrumb 
-            style={{ margin: '16px 0' }} 
-            items={[
-                {title: '第一层'},
-                {title: '第二层'}
-            ]} 
-        />
-    )
+  return (
+    <Breadcrumb
+      style={{ margin: "16px 0" }}
+      items={[{ title: "第一层" }, { title: "第二层" }]}
+    />
+  )
 }
 
 export default TreePath

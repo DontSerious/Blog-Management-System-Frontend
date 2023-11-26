@@ -1,51 +1,58 @@
-import React, { CSSProperties } from 'react';
-import { Tree } from 'antd';
-import type { DataNode, DirectoryTreeProps } from 'antd/es/tree';
+import React, { CSSProperties, useEffect } from "react"
+import { Tree } from "antd"
+import type { DirectoryTreeProps } from "antd/es/tree"
+import { EditData, useEditStore } from "../../contexts/EditPageStore"
+import { getDirTree, getFileContent } from "../../services/editAPI"
 
-const { DirectoryTree } = Tree;
+const { DirectoryTree } = Tree
 
 interface TreeDirNavProps {
-    style?: CSSProperties;
-}  
-
-const treeData: DataNode[] = [
-    {
-        title: 'parent 0',
-        key: '0-0',
-        children: [
-            { title: 'leaf 0-0', key: '0-0-0', isLeaf: true },
-            { title: 'leaf 0-1', key: '0-0-1', isLeaf: true },
-        ],
-    },
-    {
-        title: 'parent 1',
-        key: '0-1',
-        children: [
-            { title: 'leaf 1-0', key: '0-1-0', isLeaf: true },
-            { title: 'leaf 1-1', key: '0-1-1', isLeaf: true },
-        ],
-    },
-];
+  style?: CSSProperties
+}
 
 const TreeDirNav: React.FC<TreeDirNavProps> = ({ style }) => {
-    const onSelect: DirectoryTreeProps['onSelect'] = (keys, info) => {
-        console.log('Trigger Select', keys, info);
-    };
+  const { dirTree, setDirTree, setCurrFile } = useEditStore()
 
-    const onExpand: DirectoryTreeProps['onExpand'] = (keys, info) => {
-        console.log('Trigger Expand', keys, info);
-    };
+  useEffect(() => {
+    const init = async () => {
+      try {
+        const resp = await getDirTree()
+        const data: EditData[] = resp.data.data
+        setDirTree(data)
+      } catch (error) {
+        console.error("Initialization failed:", error)
+      }
+    }
 
-    return (
-        <DirectoryTree
-            style={{ ...style }}
-            multiple
-            defaultExpandAll
-            onSelect={onSelect}
-            onExpand={onExpand}
-            treeData={treeData}
-        />
-    );
-};
+    init()
+  }, [setDirTree]) // The empty dependency array ensures this effect runs only once after the initial render
 
-export default TreeDirNav;
+  const onSelect: DirectoryTreeProps["onSelect"] = async (keys, info) => {
+    const path = String(info.node.key)
+
+    try {
+      const resp = await getFileContent(path)
+      const content = resp.data.data
+
+      if (info.node.isLeaf) {
+        setCurrFile({
+          path: path,
+          content: content,
+        })
+      }
+    } catch (error) {
+      console.error("Registration failed:", error)
+    }
+  }
+
+  return (
+    <DirectoryTree
+      style={{ ...style }}
+      multiple
+      onSelect={onSelect}
+      treeData={dirTree}
+    />
+  )
+}
+
+export default TreeDirNav
