@@ -1,5 +1,5 @@
 import axios from "axios"
-import { BE_SERVER } from "../constants"
+import { BE_SERVER } from "../utils/constants"
 
 const api = axios.create({
   baseURL: BE_SERVER,
@@ -18,24 +18,24 @@ export const getFileContent = (filePath: string) => {
 }
 
 export const createDir = (path: string) => {
-  return api.post("/createDir", {
-    params: {
-      path: path,
-    },
-  })
+  return api.post("/createDir", { path: path })
 }
 
 export const createFile = (path: string) => {
-  return api.post("/createFile", {
-    params: {
-      path: path,
-    },
-  })
+  return api.post("/createFile", { path: path })
 }
 
 export const saveFile = (path: string, content: string) => {
   return api.post("/saveFile", {
     path: path,
     content: content,
+  })
+}
+
+export const delAll = (path: string) => {
+  return api.delete("/delAll", {
+    params: {
+      path: path,
+    },
   })
 }

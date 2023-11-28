@@ -9,7 +9,7 @@ const SearchBox: FC = () => {
     <>
       <Select
         showSearch
-        style={{ paddingLeft: 10, width: 200 }}
+        style={{ paddingLeft: 10, width: "100%" }}
         placeholder="Search to Select"
         optionFilterProp="children"
         filterOption={(input, option) => (option?.label ?? "").includes(input)}

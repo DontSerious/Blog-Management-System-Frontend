@@ -21,7 +21,6 @@ const NavBar: FC = () => {
   return (
     <>
       <Menu
-        style={{ paddingLeft: 10 }}
         theme="dark"
         mode="horizontal"
         selectedKeys={[mainNavBarSelect]}

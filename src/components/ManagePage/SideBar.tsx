@@ -1,12 +1,8 @@
-import React, { useEffect } from "react"
+import React from "react"
 import { MailOutlined, CalendarOutlined } from "@ant-design/icons"
 import { Menu } from "antd"
 import type { MenuProps } from "antd/es/menu"
-import {
-  setSelectedMenuItem,
-  setShowInfo,
-  useManageStore,
-} from "../../contexts/ManagePageStore"
+import { useManageStore } from "../../contexts/ManagePageStore"
 import { useUserInfoStore } from "../../contexts/UserInfoStore"
 
 type MenuItem = Required<MenuProps>["items"][number]
@@ -29,17 +25,11 @@ const items: MenuItem[] = [
 ]
 
 const SideBar: React.FC = () => {
-  const { selectedMenuItem } = useManageStore()
+  const { selectedMenuItem, setSelectedMenuItem } = useManageStore()
   const { info } = useUserInfoStore()
 
-  useEffect(() => {
-    const showInfo =
-      selectedMenuItem === "Categories" ? info!.categories : info!.tags
-    setShowInfo(showInfo!)
-  }, [selectedMenuItem, info])
-
   const handleMenuClick = (menuItem: any) => {
-    setSelectedMenuItem(menuItem.key)
+    setSelectedMenuItem(menuItem.key, info)
   }
 
   return (

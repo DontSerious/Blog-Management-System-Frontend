@@ -1,11 +1,11 @@
-import { useState, FC, useEffect } from 'react'
-import { Form, Input, Button, Card } from 'antd'
-import { UserOutlined, LockOutlined } from '@ant-design/icons'
-import { useNavigate, Link } from 'react-router-dom'
-import { login, queryInfo } from '../services/userAPI'
-import { StatusSuccess } from '../constants'
-import { useAuthState, setAuth } from '../contexts/AuthStore';
-import { setUserInfo } from '../contexts/UserInfoStore';
+import { useState, FC, useEffect } from "react"
+import { Form, Input, Button, Card } from "antd"
+import { UserOutlined, LockOutlined } from "@ant-design/icons"
+import { useNavigate, Link } from "react-router-dom"
+import { login, queryInfo } from "../services/userAPI"
+import { StatusSuccess } from "../utils/constants"
+import { useAuthState, setAuth } from "../contexts/AuthStore"
+import { setUserInfo } from "../contexts/UserInfoStore"
 
 const Login: FC = () => {
   const [form] = Form.useForm()
@@ -13,12 +13,12 @@ const Login: FC = () => {
   const navigate = useNavigate()
   const [loginFail, setLoginFail] = useState(false)
   const [loginSuccess, setLoginSuccess] = useState(false)
-  const { statusMsg } = useAuthState();
+  const { statusMsg } = useAuthState()
 
   useEffect(() => {
     if (loginSuccess) {
       setTimeout(() => {
-        navigate('/manage') // 跳转到登录页面
+        navigate("/manage") // 跳转到登录页面
       }, 1500)
     }
   }, [loginSuccess, navigate])
@@ -27,7 +27,7 @@ const Login: FC = () => {
     setLoading(true)
     setLoginSuccess(false)
     setLoginFail(false)
-    
+
     try {
       // login
       const response = await login(values)
@@ -46,53 +46,60 @@ const Login: FC = () => {
       setUserInfo(userId, values.username, infodata.data)
     } catch (error) {
       // 处理登录失败
-      console.error('Login failed:', error)
+      console.error("Login failed:", error)
     } finally {
       setLoading(false)
     }
   }
 
   return (
-    <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100vh' }}>
+    <div
+      style={{
+        display: "flex",
+        justifyContent: "center",
+        alignItems: "center",
+        height: "100vh",
+      }}
+    >
       <Card style={{ width: 300 }}>
-        <Form
-          form={form}
-          name="login-form"
-          onFinish={onFinish}
-        >
+        <Form form={form} name="login-form" onFinish={onFinish}>
           <Form.Item
             name="username"
-            rules={[{ required: true, message: '输入有误!' }]}
+            rules={[{ required: true, message: "输入有误!" }]}
           >
             <Input prefix={<UserOutlined />} placeholder="用户名" />
           </Form.Item>
 
-          <Form.Item style={{ marginBottom: '10px' }}
+          <Form.Item
+            style={{ marginBottom: "10px" }}
             name="password"
-            rules={[{ required: true, message: '输入有误!' }]}
+            rules={[{ required: true, message: "输入有误!" }]}
           >
             <Input.Password prefix={<LockOutlined />} placeholder="密码" />
           </Form.Item>
 
-          <Form.Item style={{ marginBottom: '10px' }}>
+          <Form.Item style={{ marginBottom: "10px" }}>
             还没有账号？&nbsp;&nbsp;
-            <Link to='/register'>
-              注册
-            </Link>
+            <Link to="/register">注册</Link>
           </Form.Item>
 
           <Form.Item>
-            <Button type="primary" htmlType="submit" loading={loading} style={{ width: '100%' }}>
+            <Button
+              type="primary"
+              htmlType="submit"
+              loading={loading}
+              style={{ width: "100%" }}
+            >
               登录
             </Button>
           </Form.Item>
 
           <div>
             {loginSuccess ? (
-              <p style={{ color: 'green' }}> {statusMsg} 正在跳转... </p>
+              <p style={{ color: "green" }}> {statusMsg} 正在跳转... </p>
             ) : null}
             {loginFail ? (
-              <p style={{ color: 'red' }}> {statusMsg} 请重试...</p>
+              <p style={{ color: "red" }}> {statusMsg} 请重试...</p>
             ) : null}
           </div>
         </Form>

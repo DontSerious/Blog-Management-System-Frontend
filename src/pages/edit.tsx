@@ -1,16 +1,22 @@
-import { FC } from "react"
+import { FC, useEffect } from "react"
 import { Layout, theme } from "antd"
-import TreeDirNav from "../components/EditPage/TreeDirNav"
+import TreeDirNav from "../components/EditPage/SideNav"
 import MyMarkdownEditor from "../components/EditPage/MarkdownEditor"
 import NavBar from "../components/Header/NavBar"
 import UserBox from "../components/Header/UserBox"
 import SearchBox from "../components/Widgets/SearchBox"
 import TopHandler from "../components/EditPage/TopHandler"
+import { usePageStore } from "../contexts/PageStore"
 
 const { Header, Content, Sider } = Layout
 
 const Edit: FC = () => {
-  // page
+  const { setMainNavBarSelect } = usePageStore()
+
+  useEffect(() => {
+    setMainNavBarSelect("Edit")
+  }, [])
+
   const {
     token: { colorBgContainer },
   } = theme.useToken()
@@ -30,7 +36,7 @@ const Edit: FC = () => {
           }}
         />
         <Layout style={{ paddingBottom: "24px", background: colorBgContainer }}>
-          <Sider style={{ background: colorBgContainer }} width={200}>
+          <Sider style={{ background: colorBgContainer }} width={300}>
             <SearchBox />
             <TreeDirNav style={{ padding: "12px 0 0 12px" }} />
           </Sider>

@@ -1,16 +1,18 @@
 import { create } from "zustand"
 import { persist } from "zustand/middleware"
 
-interface UserInfo {
+interface Info {
   userId: string
   username: string
-  info: {
-    categories: string[]
-    tags: string[]
-  }
+  info: UserInfo
 }
 
-export const useUserInfoStore = create<UserInfo>()(
+export type UserInfo = {
+  categories: string[]
+  tags: string[]
+}
+
+export const useUserInfoStore = create<Info>()(
   persist(
     (set) => ({
       userId: "",
@@ -30,7 +32,7 @@ export const useUserInfoStore = create<UserInfo>()(
 export const setUserInfo = (
   userId: string,
   username: string,
-  info: UserInfo["info"]
+  info: Info["info"]
 ) =>
   useUserInfoStore.setState({
     userId: userId,

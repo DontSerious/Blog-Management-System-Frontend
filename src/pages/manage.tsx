@@ -1,16 +1,23 @@
-import { FC } from "react"
+import { FC, useEffect } from "react"
 import { Layout, theme } from "antd"
 import NavBar from "../components/Header/NavBar"
 import UserBox from "../components/Header/UserBox"
 import SideBar from "../components/ManagePage/SideBar"
 import ShowInfoForm from "../components/ManagePage/ShowInfoForm"
+import { usePageStore } from "../contexts/PageStore"
 
 const { Header, Content, Sider } = Layout
 
 const ManagePage: FC = () => {
+  const { setMainNavBarSelect } = usePageStore()
+
   const {
     token: { colorBgContainer },
   } = theme.useToken()
+
+  useEffect(() => {
+    setMainNavBarSelect("Manage")
+  }, [])
 
   return (
     <Layout>
