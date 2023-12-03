@@ -1,14 +1,24 @@
 import { DataNode } from "antd/es/tree"
 import { create } from "zustand"
-import { persist } from "zustand/middleware"
 
 interface EditPageItem {
   sourceData: EditData[]
   dirTree: DataNode[]
   searchBoxData: searchBoxData[]
   setDirTree: (dir: EditData[]) => void
+
+  // mdEditor
   currentFile: EditFile
   setCurrFile: (file: EditFile) => void
+
+  // FileInfoBox
+  currentArr: FileInfoItem
+  setCurrArr: (obj: FileInfoItem) => void
+}
+
+export type FileInfoItem = {
+  Categories: string[]
+  Tags: string[]
 }
 
 export type EditData = {
@@ -50,27 +60,31 @@ const transSearch = (data: EditData[]) => {
   return newData
 }
 
-export const useEditStore = create<EditPageItem>()(
-  persist(
-    (set) => ({
-      sourceData: [],
-      dirTree: [],
-      searchBoxData: [],
-      setDirTree: (dir: EditData[]) =>
-        set(() => ({
-          sourceData: dir,
-          dirTree: transEdit(dir),
-          searchBoxData: transSearch(dir),
-        })),
-      currentFile: {
-        path: "请选择文件",
-        content: "请选择文件",
-      },
-      setCurrFile: (file: EditFile) =>
-        set(() => ({
-          currentFile: file,
-        })),
-    }),
-    { name: "edit" }
-  )
-)
+export const useEditStore = create<EditPageItem>()((set) => ({
+  sourceData: [],
+  dirTree: [],
+  searchBoxData: [],
+  setDirTree: (dir: EditData[]) =>
+    set(() => ({
+      sourceData: dir,
+      dirTree: transEdit(dir),
+      searchBoxData: transSearch(dir),
+    })),
+  currentFile: {
+    path: "请选择文件",
+    content: "请选择文件",
+  },
+  setCurrFile: (file: EditFile) =>
+    set(() => ({
+      currentFile: file,
+    })),
+
+  currentArr: {
+    Categories: [],
+    Tags: [],
+  },
+  setCurrArr: (obj: FileInfoItem) =>
+    set(() => ({
+      currentArr: obj,
+    })),
+}))

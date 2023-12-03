@@ -17,7 +17,7 @@ const ManagePage: FC = () => {
 
   useEffect(() => {
     setMainNavBarSelect("Manage")
-  }, [])
+  }, [setMainNavBarSelect])
 
   return (
     <Layout>

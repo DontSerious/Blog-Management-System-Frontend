@@ -17,6 +17,7 @@ const MyMarkdownEditor: FC = () => {
   return (
     <div>
       <MarkdownEditor
+        style={{ minHeight: 1100 }}
         value={currentFile.content}
         onChange={handleEditorChange}
         renderHTML={(text) => <ReactMarkdown>{text}</ReactMarkdown>}

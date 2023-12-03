@@ -62,18 +62,13 @@ const ShowInfoForm: React.FC = () => {
       <Form.List name="userInfoList">
         {(fields, { add, remove }) => (
           <>
-            {fields.map(({ key, name, ...restField }) => (
-              <Space
-                key={key}
-                style={{ display: "flex", marginBottom: 8 }}
-                align="baseline"
-              >
+            {fields.map(({ key, name }) => (
+              <Space key={key} style={{ display: "flex" }} align="baseline">
                 <Form.Item
-                  {...restField}
                   name={[name, "value"]}
                   rules={[{ required: true, message: "为空" }]}
                 >
-                  <Input placeholder={selectedMenuItem!} />
+                  <Input placeholder={selectedMenuItem} />
                 </Form.Item>
                 <MinusCircleOutlined onClick={() => remove(name)} />
               </Space>

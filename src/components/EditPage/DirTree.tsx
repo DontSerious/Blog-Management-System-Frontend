@@ -1,4 +1,4 @@
-import React, { useEffect, useMemo, useState } from "react"
+import { CSSProperties, FC, useEffect, useMemo, useState } from "react"
 import { Tree, Spin } from "antd"
 import { EditData, useEditStore } from "../../contexts/EditPageStore"
 import { getDirTree } from "../../services/editAPI"
@@ -7,10 +7,11 @@ import type { DirectoryTreeProps } from "antd/es/tree"
 const { DirectoryTree } = Tree
 
 interface DirTreeProps {
-  onSelect: DirectoryTreeProps["onSelect"]
+  style?: CSSProperties
+  onSelect?: DirectoryTreeProps["onSelect"]
 }
 
-const DirTree: React.FC<DirTreeProps> = ({ onSelect }) => {
+const DirTree: FC<DirTreeProps> = ({ style, onSelect }) => {
   const { dirTree, setDirTree } = useEditStore()
   const [loading, setLoading] = useState(true)
 
@@ -35,7 +36,12 @@ const DirTree: React.FC<DirTreeProps> = ({ onSelect }) => {
 
   return (
     <Spin spinning={loading}>
-      <DirectoryTree showLine onSelect={onSelect} treeData={memoizedDirTree} />
+      <DirectoryTree
+        style={style}
+        showLine
+        onSelect={onSelect}
+        treeData={memoizedDirTree}
+      />
     </Spin>
   )
 }

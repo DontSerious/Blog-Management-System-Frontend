@@ -1,5 +1,5 @@
 import { CSSProperties, FC, useEffect, useState } from "react"
-import { Button, Col, Input, Modal, Row, Switch, message } from "antd"
+import { Button, Col, Input, Modal, Row, Space, Switch, message } from "antd"
 import { EditData, useEditStore } from "../../contexts/EditPageStore"
 import {
   createDir,
@@ -35,6 +35,8 @@ const TopHandler: FC<TopHandlerProps> = ({ style }) => {
         setDirTree(data)
       } catch (error) {
         console.error(error)
+      } finally {
+        setLoading(false)
       }
     }
 
@@ -83,8 +85,6 @@ const TopHandler: FC<TopHandlerProps> = ({ style }) => {
       sendMsg(data.status_code, data.status_msg)
     } catch (error) {
       console.error(error)
-    } finally {
-      setLoading(false)
     }
   }
 
@@ -96,8 +96,6 @@ const TopHandler: FC<TopHandlerProps> = ({ style }) => {
       sendMsg(data.status_code, data.status_msg)
     } catch (error) {
       console.error(error)
-    } finally {
-      setLoading(false)
     }
   }
 
@@ -107,10 +105,10 @@ const TopHandler: FC<TopHandlerProps> = ({ style }) => {
         {contextHolder}
         <Col>当前文件：{currentFile.path}</Col>
         <Col>
-          <Button onClick={() => setOpen(true)} style={{ marginRight: 10 }}>
-            管理
-          </Button>
-          <Button onClick={save}>保存</Button>
+          <Space>
+            <Button onClick={() => setOpen(true)}>管理</Button>
+            <Button onClick={save}>保存</Button>
+          </Space>
         </Col>
       </Row>
       <Modal
