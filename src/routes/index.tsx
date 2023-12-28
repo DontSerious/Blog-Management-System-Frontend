@@ -4,6 +4,8 @@ import Register from "../pages/register"
 import Edit from "../pages/edit"
 import ManagePage from "../pages/manage"
 import "../style/index.css"
+import File from "../pages/file"
+import User from "../pages/user"
 
 export default [
   {
@@ -21,6 +23,14 @@ export default [
   {
     path: "/manage",
     element: <ManagePage />,
+  },
+  {
+    path: "/file",
+    element: <File />,
+  },
+  {
+    path: "/user",
+    element: <User />,
   },
   {
     // 重定向

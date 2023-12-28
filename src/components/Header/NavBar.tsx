@@ -25,6 +25,7 @@ const NavBar: FC = () => {
         mode="horizontal"
         selectedKeys={[mainNavBarSelect]}
         items={items}
+        style={{ display: "flex" }}
       />
     </>
   )

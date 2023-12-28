@@ -1,8 +1,6 @@
 import { FC, useEffect } from "react"
 import { Divider, Layout, theme } from "antd"
 import MyMarkdownEditor from "../components/EditPage/MarkdownEditor"
-import NavBar from "../components/Header/NavBar"
-import UserBox from "../components/Header/UserBox"
 import SearchBox from "../components/Widgets/SearchBox"
 import TopHandler from "../components/EditPage/TopHandler"
 import { usePageStore } from "../contexts/PageStore"
@@ -10,9 +8,10 @@ import FileInfoBox from "../components/EditPage/FileInfoBox"
 import type { DirectoryTreeProps } from "antd/es/tree"
 import { getFileContent } from "../services/editAPI"
 import { useEditStore } from "../contexts/EditPageStore"
-import DirTree from "../components/EditPage/DirTree"
+import DirTree from "../components/Widgets/DirTree"
+import HeaderWig from "../components/Widgets/HeaderWig"
 
-const { Header, Content, Sider } = Layout
+const { Content, Sider } = Layout
 
 const Edit: FC = () => {
   const { setMainNavBarSelect } = usePageStore()
@@ -47,10 +46,7 @@ const Edit: FC = () => {
 
   return (
     <Layout>
-      <Header style={{ display: "flex", alignItems: "center", padding: 0 }}>
-        <NavBar />
-        <UserBox />
-      </Header>
+      <HeaderWig />
       <Content style={{ padding: "0 40px" }}>
         <TopHandler
           style={{

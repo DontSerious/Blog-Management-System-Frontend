@@ -9,7 +9,7 @@ interface pageItem {
 
 export const usePageStore = create<pageItem>()((set) => ({
   mainNavBarSelect: "Manage",
-  module: ["Manage", "Edit"],
+  module: ["Manage", "Edit", "File"],
   setMainNavBarSelect: (select: string) =>
     set(() => ({
       mainNavBarSelect: select,

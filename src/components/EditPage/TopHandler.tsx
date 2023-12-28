@@ -9,7 +9,7 @@ import {
   saveFile,
 } from "../../services/editAPI"
 import { StatusSuccess } from "../../utils/constants"
-import DirTree from "./DirTree"
+import DirTree from "../Widgets/DirTree"
 import { DirectoryTreeProps } from "antd/es/tree"
 
 interface TopHandlerProps {
