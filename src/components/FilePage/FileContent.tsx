@@ -20,7 +20,6 @@ import {
 import { StatusSuccess } from "../../utils/constants"
 import DirTree from "../Widgets/DirTree"
 import UploadBox from "../Widgets/UploadBox"
-import { downloadFile } from "../../services/fileAPI"
 
 const FileContent: FC = () => {
   const { Text } = Typography
@@ -111,12 +110,6 @@ const FileContent: FC = () => {
     }
   }
 
-  const onDownload = async () => {
-    const resp = await downloadFile(currPath)
-    const data = resp.data
-    sendMsg(data.status_code, data.status_msg)
-  }
-
   return (
     <Content
       style={{
@@ -158,18 +151,6 @@ const FileContent: FC = () => {
             onChange={() => setIsFile(!isFile)}
             key={0}
           />
-          <Popconfirm
-            title="下载"
-            description={"是否下载\t" + currPath + "\t?"}
-            onConfirm={onDownload}
-            okText="Yes"
-            cancelText="No"
-            placement="leftBottom"
-          >
-            <Button loading={loading} style={{ marginRight: 10 }}>
-              下载
-            </Button>
-          </Popconfirm>
           <Popconfirm
             title="新建"
             description={

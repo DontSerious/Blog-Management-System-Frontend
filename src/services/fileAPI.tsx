@@ -8,11 +8,3 @@ const api = axios.create({
 export const uploadFile = (data: FormData) => {
   return api.post("/uploadFile", data)
 }
-
-export const downloadFile = (path: string) => {
-  return api.get("/downloadFile", {
-    params: {
-      path: path,
-    },
-  })
-}

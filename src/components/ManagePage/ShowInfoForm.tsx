@@ -18,14 +18,19 @@ const ShowInfoForm: React.FC = () => {
   const [updateMsg, setUpdateMsg] = useState("")
   const [loading, setLoading] = useState(false)
 
+  // 侧边改变时渲染
   useEffect(() => {
-    // Update form fields when showInfo changes
-    const updatedValues = showInfo.map((item, index) => ({
-      key: index,
-      value: item,
-    }))
-    form.setFieldsValue({ userInfoList: updatedValues })
+    updateForm()
   }, [showInfo, form])
+
+  const updateForm = () => {
+    form.setFieldsValue({
+      userInfoList: showInfo.map((item, index) => ({
+        key: index,
+        value: item,
+      })),
+    })
+  }
 
   const onFinish = async (values: any) => {
     // 获取页面value

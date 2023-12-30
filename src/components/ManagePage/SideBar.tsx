@@ -1,4 +1,4 @@
-import React from "react"
+import React, { useEffect } from "react"
 import { MailOutlined, CalendarOutlined } from "@ant-design/icons"
 import { Menu } from "antd"
 import type { MenuProps } from "antd/es/menu"
@@ -25,8 +25,12 @@ const items: MenuItem[] = [
 ]
 
 const SideBar: React.FC = () => {
-  const { selectedMenuItem, setSelectedMenuItem } = useManageStore()
+  const { setSelectedMenuItem } = useManageStore()
   const { info } = useUserInfoStore()
+
+  useEffect(() => {
+    setSelectedMenuItem("Categories", info)
+  }, [])
 
   const handleMenuClick = (menuItem: any) => {
     setSelectedMenuItem(menuItem.key, info)
@@ -34,7 +38,7 @@ const SideBar: React.FC = () => {
 
   return (
     <Menu
-      defaultSelectedKeys={[selectedMenuItem]}
+      defaultSelectedKeys={["Categories"]}
       mode="vertical"
       theme="light"
       items={items}

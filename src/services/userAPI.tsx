@@ -32,3 +32,7 @@ export const updateInfo = (
     Tags: tags,
   })
 }
+
+export const changePWD = (formData: FormData) => {
+  return api.post("/changePWD", formData)
+}

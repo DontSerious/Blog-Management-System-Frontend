@@ -46,7 +46,6 @@ const FileInfoBox: FC = () => {
   }
 
   const buildFileHead = (info: any) => {
-    console.log(info)
     let isToc = false
     if (info.toc) isToc = true
     const str =
