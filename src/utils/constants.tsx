@@ -1,3 +1,3 @@
-export const BE_SERVER = "http://localhost:22222"
+export const BE_SERVER = "http://localhost:8080"
 
 export const StatusSuccess = 0

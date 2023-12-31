@@ -1,9 +1,6 @@
-import axios from "axios"
-import { BE_SERVER } from "../utils/constants"
+import { BaseApi } from "./baseAPI"
 
-const api = axios.create({
-  baseURL: BE_SERVER,
-})
+const api = BaseApi
 
 export const login = (formData: any) => {
   return api.post("/login", formData)
