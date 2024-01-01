@@ -5,6 +5,7 @@ interface Info {
   userId: string
   username: string
   info: UserInfo
+  isAuth: boolean
 }
 
 export type UserInfo = {
@@ -21,6 +22,7 @@ export const useUserInfoStore = create<Info>()(
         categories: [],
         tags: [],
       },
+      isAuth: false,
       set,
     }),
     {
@@ -38,6 +40,7 @@ export const setUserInfo = (
     userId: userId,
     username: username,
     info: info,
+    isAuth: true,
   })
 
 export const resetUserInfo = () =>
@@ -48,4 +51,5 @@ export const resetUserInfo = () =>
       categories: [],
       tags: [],
     },
+    isAuth: false,
   })

@@ -1,14 +1,14 @@
-import { create } from 'zustand';
+import { create } from "zustand"
 
 interface State {
-    statusMsg: string | null;
+  statusMsg: string | null
 }
 
 export const useAuthState = create<State>()(() => ({
-    statusMsg: null,
+  statusMsg: null,
 }))
 
-export const setAuth = (statusMsg: State['statusMsg']) => 
-    useAuthState.setState({
-        statusMsg: statusMsg
-    })
+export const setAuth = (statusMsg: State["statusMsg"]) =>
+  useAuthState.setState({
+    statusMsg: statusMsg,
+  })

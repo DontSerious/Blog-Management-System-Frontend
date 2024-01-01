@@ -1,4 +1,4 @@
-import { FC, useEffect, useState } from "react"
+import { CSSProperties, FC, useEffect, useState } from "react"
 import {
   Button,
   Flex,
@@ -8,7 +8,6 @@ import {
   Typography,
   message,
 } from "antd"
-import { Content } from "antd/es/layout/layout"
 import { DirectoryTreeProps } from "antd/es/tree"
 import { EditData, useEditStore } from "../../contexts/EditPageStore"
 import {
@@ -21,7 +20,11 @@ import { StatusSuccess } from "../../utils/constants"
 import DirTree from "../Widgets/DirTree"
 import UploadBox from "../Widgets/UploadBox"
 
-const FileContent: FC = () => {
+interface Props {
+  style?: CSSProperties
+}
+
+const FileContent: FC<Props> = ({ style }) => {
   const { Text } = Typography
 
   const { setDirTree } = useEditStore()
@@ -111,17 +114,12 @@ const FileContent: FC = () => {
   }
 
   return (
-    <Content
-      style={{
-        margin: "20px 40px",
-        backgroundColor: "white",
-      }}
-    >
+    <>
       {contextHolder}
       {/* FileTop */}
       <div
         style={{
-          margin: "30px 0 0 30px",
+          padding: "30px 0 0 30px",
           display: "flex",
           justifyContent: "space-between",
           alignItems: "center",
@@ -191,7 +189,7 @@ const FileContent: FC = () => {
           <UploadBox currPath={currPath} send={sendMsg} isLoading={isLoading} />
         </div>
       </Flex>
-    </Content>
+    </>
   )
 }
 

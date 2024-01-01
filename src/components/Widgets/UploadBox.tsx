@@ -1,7 +1,7 @@
-import { Modal, UploadProps, message } from "antd"
+import { UploadProps } from "antd"
 import Dragger from "antd/es/upload/Dragger"
 import { InboxOutlined } from "@ant-design/icons"
-import { CSSProperties, FC, useState } from "react"
+import { CSSProperties, FC } from "react"
 import { uploadFile } from "../../services/fileAPI"
 
 interface Props {

@@ -100,8 +100,8 @@ const TopHandler: FC<TopHandlerProps> = ({ style }) => {
   }
 
   return (
-    <>
-      <Row justify="space-between" align="middle" style={style}>
+    <div style={style}>
+      <Row justify="space-between" align="middle">
         {contextHolder}
         <Col>当前文件：{currentFile.path}</Col>
         <Col>
@@ -142,7 +142,7 @@ const TopHandler: FC<TopHandlerProps> = ({ style }) => {
           onChange={(e) => setCurrPath(e.target.value)}
         />
       </Modal>
-    </>
+    </div>
   )
 }
 

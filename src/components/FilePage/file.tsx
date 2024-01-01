@@ -1,7 +1,6 @@
-import { ConfigProvider, Layout } from "antd"
+import { ConfigProvider } from "antd"
 import { FC } from "react"
-import HeaderWig from "../components/Widgets/HeaderWig"
-import FileContent from "../components/FilePage/FileContent"
+import FileContent from "./FileContent"
 
 const File: FC = () => {
   return (
@@ -14,10 +13,7 @@ const File: FC = () => {
         },
       }}
     >
-      <Layout>
-        <HeaderWig />
-        <FileContent />
-      </Layout>
+      <FileContent />
     </ConfigProvider>
   )
 }

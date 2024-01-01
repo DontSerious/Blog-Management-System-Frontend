@@ -1,15 +1,12 @@
-import type { FC } from 'react'
-import { useRoutes } from 'react-router-dom'
-import routes from './routes/index'
+import { type FC } from "react"
+import { Navigate, Outlet } from "react-router-dom"
 
 const App: FC = () => {
-  // 获得路由表
-  const routeView = useRoutes(routes)
-
   return (
-    <>
-      {routeView}
-    </>
+    <div>
+      <Navigate to={"/user"} replace />
+      <Outlet />
+    </div>
   )
 }
 

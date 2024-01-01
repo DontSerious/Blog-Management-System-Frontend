@@ -1,5 +1,5 @@
 import { FC } from "react"
-import { Button, Flex, Space, Typography } from "antd"
+import { Button, Space, Typography } from "antd"
 import { useUserInfoStore, resetUserInfo } from "../../contexts/UserInfoStore"
 import { useNavigate } from "react-router-dom"
 import { usePageStore } from "../../contexts/PageStore"
@@ -17,8 +17,8 @@ const UserBox: FC = () => {
   }
 
   const logout = () => {
-    navigate("/login")
     resetUserInfo()
+    navigate("/auth/login")
   }
 
   return (
