@@ -33,3 +33,15 @@ export const updateInfo = (
 export const changePWD = (formData: FormData) => {
   return api.post("/changePWD", formData)
 }
+
+export const getAllUser = () => {
+  return api.get("/getAllUser")
+}
+
+export const delUser = (user_id: any) => {
+  return api.get("/delUser", {
+    params: {
+      _id: user_id,
+    },
+  })
+}

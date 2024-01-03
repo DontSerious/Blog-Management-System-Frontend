@@ -2,7 +2,8 @@ import { Button, Form, Input, message } from "antd"
 import { FC } from "react"
 import { useUserInfoStore } from "../../contexts/UserInfoStore"
 import { changePWD, login } from "../../services/userAPI"
-import { StatusSuccess } from "../../utils/constants"
+import { AdminUserName, StatusSuccess } from "../../utils/constants"
+import { Navigate, Outlet } from "react-router-dom"
 
 type formRes = {
   confirmPassword: string
@@ -12,7 +13,6 @@ type formRes = {
 
 const User: FC = () => {
   const { userId, username } = useUserInfoStore()
-  const { info } = useUserInfoStore()
 
   // 表单提交成功的回调
   const onFinish = async (values: formRes) => {
@@ -37,16 +37,18 @@ const User: FC = () => {
     }
   }
 
+  const navigate = () => {
+    if (username === AdminUserName) {
+      return <Navigate to={"/user/adminBox"} replace />
+    } else {
+      return <Navigate to={"/user/userBox"} replace />
+    }
+  }
+
   return (
     <div style={{ padding: "12px 24px" }}>
-      {/* 用户资料展示 */}
-      <div>
-        <h2>User Profile</h2>
-        <p>userId: {userId}</p>
-        <p>username: {username}</p>
-        <p>categories: {info.categories.toLocaleString()}</p>
-        <p>tags: {info.tags.toLocaleString()}</p>
-      </div>
+      {navigate()}
+      <Outlet />
 
       {/* 修改密码表单 */}
       <div style={{ marginTop: "24px" }}>

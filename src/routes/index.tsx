@@ -11,6 +11,8 @@ import Auth from "../pages/auth"
 import { RequireAuth } from "../utils/auth"
 import NotFound from "../pages/notfound"
 import App from "../App"
+import Admin from "../components/UserPage/admin"
+import UserBox from "../components/UserPage/userBox"
 
 const AuthRoutes = {
   path: "auth",
@@ -37,8 +39,17 @@ const UserRoute = {
   children: [
     {
       path: "user",
-      index: true,
       element: <User />,
+      children: [
+        {
+          path: "userBox",
+          element: <UserBox />,
+        },
+        {
+          path: "adminBox",
+          element: <Admin />,
+        },
+      ],
     },
     {
       path: "manage",
@@ -51,6 +62,10 @@ const UserRoute = {
     {
       path: "file",
       element: <File />,
+    },
+    {
+      path: "admin",
+      element: <Admin />,
     },
   ],
 }

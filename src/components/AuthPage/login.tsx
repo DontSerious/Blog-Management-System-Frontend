@@ -3,9 +3,9 @@ import { Form, Input, Button, Card, message } from "antd"
 import { UserOutlined, LockOutlined } from "@ant-design/icons"
 import { useNavigate, Link } from "react-router-dom"
 import { login, queryInfo } from "../../services/userAPI"
-import { AdminUserName, StatusSuccess } from "../../utils/constants"
+import { StatusSuccess } from "../../utils/constants"
 import { useAuthState, setAuth } from "../../contexts/AuthStore"
-import { setUserInfo, useUserInfoStore } from "../../contexts/UserInfoStore"
+import { setUserInfo } from "../../contexts/UserInfoStore"
 
 const Login: FC = () => {
   const navigate = useNavigate()
@@ -14,19 +14,13 @@ const Login: FC = () => {
   const [loading, setLoading] = useState(false)
   const [loginFail, setLoginFail] = useState(false)
   const [loginSuccess, setLoginSuccess] = useState(false)
-  const [isAdmin, setIsAdmin] = useState(false)
 
-  const { username } = useUserInfoStore()
   const { statusMsg } = useAuthState()
 
   useEffect(() => {
     if (loginSuccess) {
       setTimeout(() => {
-        if (isAdmin && username === AdminUserName) {
-          navigate("/admin")
-        } else {
-          navigate("/user")
-        }
+        navigate("/user")
       }, 1500)
     }
   }, [loginSuccess, navigate])
@@ -42,16 +36,17 @@ const Login: FC = () => {
       const data = response.data
       const userId = data.data
       setAuth(data.status_msg)
-      if (data.status_code === StatusSuccess) {
-        setLoginSuccess(true)
-      } else {
-        setLoginFail(true)
-      }
 
       // userInfo
       const infoResponse = await queryInfo(userId)
       const infoData = infoResponse.data
       setUserInfo(userId, values.username, infoData.data)
+
+      if (data.status_code === StatusSuccess) {
+        setLoginSuccess(true)
+      } else {
+        setLoginFail(true)
+      }
     } catch (error) {
       message.error("login service error!" + error)
     } finally {
@@ -90,18 +85,6 @@ const Login: FC = () => {
             style={{ width: "100%" }}
           >
             登录
-          </Button>
-        </Form.Item>
-
-        <Form.Item>
-          <Button
-            type="dashed"
-            htmlType="submit"
-            loading={loading}
-            style={{ width: "100%" }}
-            onClick={() => setIsAdmin(true)}
-          >
-            管理员入口
           </Button>
         </Form.Item>
 
