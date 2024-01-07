@@ -20,17 +20,17 @@ const ShowInfoForm: React.FC = () => {
 
   // 侧边改变时渲染
   useEffect(() => {
+    const updateForm = () => {
+      form.setFieldsValue({
+        userInfoList: showInfo.map((item, index) => ({
+          key: index,
+          value: item,
+        })),
+      })
+    }
+
     updateForm()
   }, [showInfo, form])
-
-  const updateForm = () => {
-    form.setFieldsValue({
-      userInfoList: showInfo.map((item, index) => ({
-        key: index,
-        value: item,
-      })),
-    })
-  }
 
   const onFinish = async (values: any) => {
     // 获取页面value
@@ -61,7 +61,7 @@ const ShowInfoForm: React.FC = () => {
       form={form}
       name="modify_userInfo"
       onFinish={onFinish}
-      style={{ maxWidth: 300 }}
+      style={{ width: 200 }}
       autoComplete="off"
     >
       <Form.List name="userInfoList">

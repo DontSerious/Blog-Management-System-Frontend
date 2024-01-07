@@ -30,7 +30,7 @@
     "zustand": "^4.4.6"
   },
   "scripts": {
-    "start": "cross-env PORT=12333 react-app-rewired start",
+    "start": "cross-env PORT=12334 react-app-rewired start",
     "build": "react-app-rewired build",
     "test": "react-app-rewired test",
     "eject": "react-scripts eject"

@@ -19,15 +19,13 @@ const NavBar: FC = () => {
   }))
 
   return (
-    <>
-      <Menu
-        theme="dark"
-        mode="horizontal"
-        selectedKeys={[mainNavBarSelect]}
-        items={items}
-        style={{ display: "flex" }}
-      />
-    </>
+    <Menu
+      theme="dark"
+      mode="horizontal"
+      selectedKeys={[mainNavBarSelect]}
+      items={items}
+      style={{ display: "flex" }}
+    />
   )
 }
 

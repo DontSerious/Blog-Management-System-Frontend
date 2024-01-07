@@ -15,20 +15,20 @@ const DirTree: FC<DirTreeProps> = ({ style, onSelect }) => {
   const { dirTree, setDirTree } = useEditStore()
   const [loading, setLoading] = useState(true)
 
-  const fetchDirTree = async () => {
-    try {
-      setLoading(true)
-      const resp = await getDirTree()
-      const data: EditData[] = resp.data.data
-      setDirTree(data)
-    } catch (error) {
-      console.error(error)
-    } finally {
-      setLoading(false)
-    }
-  }
-
   useEffect(() => {
+    const fetchDirTree = async () => {
+      try {
+        setLoading(true)
+        const resp = await getDirTree()
+        const data: EditData[] = resp.data.data
+        setDirTree(data)
+      } catch (error) {
+        console.error(error)
+      } finally {
+        setLoading(false)
+      }
+    }
+
     fetchDirTree()
   }, [setDirTree, setLoading])
 

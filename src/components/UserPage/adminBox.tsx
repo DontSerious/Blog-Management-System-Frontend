@@ -1,4 +1,4 @@
-import { Table, Tag, message } from "antd"
+import { Button, Table, Tag, message } from "antd"
 import { ColumnsType } from "antd/es/table"
 import { FC, useEffect, useState } from "react"
 import { delUser, getAllUser } from "../../services/userAPI"
@@ -88,7 +88,8 @@ const Admin: FC = () => {
       title: "Action",
       key: "action",
       render: (info) => (
-        <a
+        <Button
+          type="link"
           onClick={async () => {
             const resp = await delUser(info.key)
             const data = resp.data
@@ -101,7 +102,7 @@ const Admin: FC = () => {
           }}
         >
           Delete
-        </a>
+        </Button>
       ),
     },
   ]

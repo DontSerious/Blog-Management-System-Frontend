@@ -1,36 +1,38 @@
 import { FC, useEffect } from "react"
-import { Layout, theme } from "antd"
+import { Col, Row, theme } from "antd"
 import SideBar from "./SideBar"
 import ShowInfoForm from "./ShowInfoForm"
 import { usePageStore } from "../../contexts/PageStore"
 
-const { Content, Sider } = Layout
-
 const ManagePage: FC = () => {
-  const { setMainNavBarSelect } = usePageStore()
-
   const {
     token: { colorBgContainer },
   } = theme.useToken()
+
+  const { setMainNavBarSelect, setModuleName } = usePageStore()
+
+  useEffect(() => {
+    setModuleName("标签管理页")
+  }, [setModuleName])
 
   useEffect(() => {
     setMainNavBarSelect("Manage")
   }, [setMainNavBarSelect])
 
   return (
-    <Layout
-      style={{
-        padding: "24px 24px",
-        background: colorBgContainer,
-      }}
-    >
-      <Sider style={{ background: colorBgContainer }}>
+    <Row justify={"center"}>
+      <Col style={{ background: colorBgContainer, width: 200 }}>
         <SideBar />
-      </Sider>
-      <Content style={{ padding: "0 24px", minHeight: 280 }}>
+      </Col>
+      <Col
+        style={{
+          padding: "0 24px",
+          minHeight: 280,
+        }}
+      >
         <ShowInfoForm />
-      </Content>
-    </Layout>
+      </Col>
+    </Row>
   )
 }
 

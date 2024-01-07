@@ -30,7 +30,7 @@ const SideBar: React.FC = () => {
 
   useEffect(() => {
     setSelectedMenuItem("Categories", info)
-  }, [])
+  }, [setSelectedMenuItem, info])
 
   const handleMenuClick = (menuItem: any) => {
     setSelectedMenuItem(menuItem.key, info)

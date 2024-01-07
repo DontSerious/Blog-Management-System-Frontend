@@ -16,6 +16,12 @@ const Edit: FC = () => {
   const { setMainNavBarSelect } = usePageStore()
   const { setCurrFile } = useEditStore()
 
+  const { setModuleName } = usePageStore()
+
+  useEffect(() => {
+    setModuleName("文档编辑页")
+  }, [setModuleName])
+
   useEffect(() => {
     setMainNavBarSelect("Edit")
   }, [setMainNavBarSelect])
@@ -41,20 +47,15 @@ const Edit: FC = () => {
 
   return (
     <>
-      <TopHandler
-        style={{
-          padding: "12px 24px",
-          marginTop: "24px",
-        }}
-      />
-      <Layout style={{ padding: "0 12px", backgroundColor: "white" }}>
+      <TopHandler style={{ padding: "0 12px" }} />
+      <Layout style={{ backgroundColor: "white", marginTop: 16 }}>
         <Sider style={{ backgroundColor: "white" }} width={315}>
           <SearchBox />
           <DirTree style={{ padding: "12px 0 0 12px" }} onSelect={onSelect} />
           <Divider orientation="left">FileInfo</Divider>
           <FileInfoBox />
         </Sider>
-        <Content style={{ padding: "0 24px", minHeight: 280 }}>
+        <Content style={{ padding: "0 12px", minHeight: 280 }}>
           <MyMarkdownEditor />
         </Content>
       </Layout>

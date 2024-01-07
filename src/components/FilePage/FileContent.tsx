@@ -117,13 +117,12 @@ const FileContent: FC<Props> = ({ style }) => {
     <>
       {contextHolder}
       {/* FileTop */}
-      <div
+      <Flex
         style={{
-          padding: "30px 0 0 30px",
-          display: "flex",
-          justifyContent: "space-between",
-          alignItems: "center",
+          padding: "0 30px",
         }}
+        justify="space-between"
+        align="center"
       >
         <Text style={{ fontSize: "20px", display: "block" }}>文件管理</Text>
         <Flex vertical={false} align="center">
@@ -180,7 +179,7 @@ const FileContent: FC<Props> = ({ style }) => {
             </Button>
           </Popconfirm>
         </div>
-      </div>
+      </Flex>
       <Flex vertical={false} style={{ padding: 20 }}>
         <div style={{ width: "60%" }}>
           <DirTree onSelect={onSelect} />

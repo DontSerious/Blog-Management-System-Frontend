@@ -1,9 +1,10 @@
 import { Button, Form, Input, message } from "antd"
-import { FC } from "react"
+import { FC, useEffect } from "react"
 import { useUserInfoStore } from "../../contexts/UserInfoStore"
 import { changePWD, login } from "../../services/userAPI"
 import { AdminUserName, StatusSuccess } from "../../utils/constants"
 import { Navigate, Outlet } from "react-router-dom"
+import { usePageStore } from "../../contexts/PageStore"
 
 type formRes = {
   confirmPassword: string
@@ -13,6 +14,11 @@ type formRes = {
 
 const User: FC = () => {
   const { userId, username } = useUserInfoStore()
+  const { setModuleName } = usePageStore()
+
+  useEffect(() => {
+    setModuleName("用户信息页")
+  }, [setModuleName])
 
   // 表单提交成功的回调
   const onFinish = async (values: formRes) => {
@@ -46,7 +52,7 @@ const User: FC = () => {
   }
 
   return (
-    <div style={{ padding: "12px 24px" }}>
+    <div>
       {navigate()}
       <Outlet />
 

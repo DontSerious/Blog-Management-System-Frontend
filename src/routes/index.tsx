@@ -11,7 +11,7 @@ import Auth from "../pages/auth"
 import { RequireAuth } from "../utils/auth"
 import NotFound from "../pages/notfound"
 import App from "../App"
-import Admin from "../components/UserPage/admin"
+import Admin from "../components/UserPage/adminBox"
 import UserBox from "../components/UserPage/userBox"
 
 const AuthRoutes = {
