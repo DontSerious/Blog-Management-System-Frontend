@@ -1,7 +1,7 @@
 import { Col, Flex, Row, Typography } from "antd"
 import { FC } from "react"
-import NavBar from "../Header/NavBar"
-import UserBox from "../Header/UserBox"
+import NavBar from "./NavBar"
+import UserBox from "./UserBox"
 
 const HeaderWig: FC = () => {
   const { Text } = Typography

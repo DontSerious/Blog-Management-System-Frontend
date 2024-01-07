@@ -1,4 +1,4 @@
-import { Button, Table, Tag, message } from "antd"
+import { Button, Popconfirm, Table, Tag, message } from "antd"
 import { ColumnsType } from "antd/es/table"
 import { FC, useEffect, useState } from "react"
 import { delUser, getAllUser } from "../../services/userAPI"
@@ -88,9 +88,10 @@ const Admin: FC = () => {
       title: "Action",
       key: "action",
       render: (info) => (
-        <Button
-          type="link"
-          onClick={async () => {
+        <Popconfirm
+          title="删除"
+          description={"是否删除该用户?"}
+          onConfirm={async () => {
             const resp = await delUser(info.key)
             const data = resp.data
             if (data.status_code === StatusSuccess) {
@@ -100,9 +101,12 @@ const Admin: FC = () => {
               message.error("删除失败：" + data.status_msg)
             }
           }}
+          okText="Yes"
+          cancelText="No"
+          placement="bottom"
         >
-          Delete
-        </Button>
+          <Button type="link">Delete</Button>
+        </Popconfirm>
       ),
     },
   ]

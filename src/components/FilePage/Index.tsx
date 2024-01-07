@@ -1,7 +1,7 @@
 import { ConfigProvider } from "antd"
 import { FC, useEffect } from "react"
-import FileContent from "./FileContent"
 import { usePageStore } from "../../contexts/PageStore"
+import FileContent from "./FileContentBox"
 
 const File: FC = () => {
   const { setModuleName } = usePageStore()
