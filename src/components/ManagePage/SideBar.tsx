@@ -1,5 +1,5 @@
 import React, { useEffect } from "react"
-import { MailOutlined, CalendarOutlined } from "@ant-design/icons"
+import { ReadOutlined, TagOutlined } from "@ant-design/icons"
 import { Menu } from "antd"
 import type { MenuProps } from "antd/es/menu"
 import { useManageStore } from "../../contexts/ManagePageStore"
@@ -20,8 +20,8 @@ function getItem(
 }
 
 const items: MenuItem[] = [
-  getItem("Categories", "Categories", <MailOutlined />),
-  getItem("Tags", "Tags", <CalendarOutlined />),
+  getItem("Categories", "Categories", <ReadOutlined />),
+  getItem("Tags", "Tags", <TagOutlined />),
 ]
 
 const SideBar: React.FC = () => {

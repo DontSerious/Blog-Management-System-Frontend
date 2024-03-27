@@ -8,9 +8,9 @@ const NavBar: FC = () => {
   const navigate = useNavigate()
   const { mainNavBarSelect, module, setMainNavBarSelect } = usePageStore()
 
-  const items: MenuProps["items"] = module.map((key) => ({
-    key: key,
-    label: `${key}`,
+  const items: MenuProps["items"] = Array.from(module.entries()).map((key) => ({
+    key: key[0],
+    label: `${key[1]}`,
     onClick: (item) => {
       setMainNavBarSelect(item.key)
       const path = item.key.toLowerCase()

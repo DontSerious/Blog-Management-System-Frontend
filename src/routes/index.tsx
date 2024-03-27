@@ -63,10 +63,6 @@ const UserRoute = {
       path: "file",
       element: <File />,
     },
-    {
-      path: "admin",
-      element: <Admin />,
-    },
   ],
 }
 
